@@ -1,4 +1,5 @@
 use clap::Parser;
+use anyhow::{Context, Result};
 
 #[derive(Parser)]
 struct Cli {
@@ -6,24 +7,10 @@ struct Cli {
     path: std::path::PathBuf,
 }
 
-#[derive(Debug)]
-struct CustomError(String);
-
-impl std::fmt::Display for CustomError {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{}", self.0)
-    }
-}
-
-impl std::error::Error for CustomError {}
-
-fn main() -> Result<(), Box<dyn std::error::Error>>{
+fn main() -> Result<()>{
     let args = Cli::parse();
-    let result = std::fs::read_to_string(&args.path);
-    let content = match result {
-        Ok(file_content) => file_content,
-        Err(error) => return Err(CustomError(format!("Error reading `{}`: {}", args.path.display(), error)).into()),
-    };
+    let content = std::fs::read_to_string(&args.path)
+    .with_context(|| format!("could not read file `{}`", args.path.display()))?;
 
     for line in content.lines(){
         if line.contains(&args.pattern){
