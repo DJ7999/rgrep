@@ -1,4 +1,4 @@
-use clap::Parser;
+use clap::{builder::Str, Parser};
 
 #[derive(Parser)]
 struct Cli {
@@ -6,13 +6,18 @@ struct Cli {
     path: std::path::PathBuf,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>>{
     let args = Cli::parse();
-    let content = std::fs::read_to_string(&args.path)
-    .expect("could not read file");
+    let result = std::fs::read_to_string(&args.path);
+    let content = match result{
+        Ok(file_content) => {file_content},
+        Err(error) => { return Err(error.into()); }
+    };
+
     for line in content.lines(){
         if line.contains(&args.pattern){
             println!("{}",line)
         }
     }
+    return Ok(());
 }
