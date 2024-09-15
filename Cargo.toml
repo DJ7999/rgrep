@@ -2,7 +2,7 @@
 name = "rgrep"
 version = "0.1.0"
 edition = "2021"
-authors = ["Rohit Joshi bhdream000@gmail.com"]
+authors = ["Rohit Joshi bhdream0000@gmail.com"]
 license = "MIT OR Apache-2.0"
 description = "A tool to search files"
 homepage = "https://github.com/DJ7999/rgrep"
