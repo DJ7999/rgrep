@@ -4,7 +4,10 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-anyhow = "1.0.88"
+anyhow = "1.0.89"
+assert_cmd = "2.0.16"
+assert_fs = "1.1.2"
 clap = { version = "4.5.17", features = ["derive"] }
 indicatif = "0.17.8"
+predicates = "3.1.2"
 
